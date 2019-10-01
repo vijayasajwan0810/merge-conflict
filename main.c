@@ -18,5 +18,8 @@ security()
 {
 //security patch
 }
+feature2()
+{
+}
 
 }
