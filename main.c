@@ -14,7 +14,9 @@ feature1()
 {
 //sample code for feature1
 }
-
-
+security()
+{
+//security patch
+}
 
 }
