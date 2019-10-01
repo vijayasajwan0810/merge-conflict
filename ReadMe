@@ -1,0 +1,351 @@
+sh-3.2# pwd
+/Users/vijayasajwan
+sh-3.2# mkdir git-merge
+sh-3.2# cd git-merge/
+sh-3.2# git clone https://github.com/vijayasajwan0810/merge-conflict.git
+Cloning into 'merge-conflict'...
+remote: Enumerating objects: 12, done.
+remote: Total 12 (delta 0), reused 0 (delta 0), pack-reused 12
+Unpacking objects: 100% (12/12), done.
+sh-3.2# ls -lrt
+total 0
+drwxr-xr-x  4 root  staff  128 Oct  1 17:56 merge-conflict
+sh-3.2# pwd
+/Users/vijayasajwan/git-merge
+sh-3.2# pwd
+/Users/vijayasajwan/git-merge
+sh-3.2# ls -lrt
+total 0
+drwxr-xr-x  4 root  staff  128 Oct  1 17:56 merge-conflict
+sh-3.2# cd merge-conflict/
+sh-3.2# 
+sh-3.2# ls
+.git	main.c
+sh-3.2# git branch
+* master
+sh-3.2# git branch feature1
+sh-3.2# git brach feature2
+git: 'brach' is not a git command. See 'git --help'.
+
+The most similar command is
+	branch
+sh-3.2# git branch feature2
+sh-3.2# git branch
+  feature1
+  feature2
+* master
+sh-3.2# ls
+.git	main.c
+sh-3.2# vi main.c 
+sh-3.2# pwd
+/Users/vijayasajwan/git-merge/merge-conflict
+sh-3.2# git add .
+sh-3.2# git commit -m "security patch to master"
+[master e924769] security patch to master
+ 1 file changed, 5 insertions(+)
+sh-3.2# git log
+commit e92476991d0591ca358ba7266f2a407f3e715381 (HEAD -> master)
+Author: vijayasajwan0810 <vijayasajwan0810@gmail.com>
+Date:   Tue Oct 1 18:01:26 2019 +0530
+
+    security patch to master
+
+commit 1dd86030647b96143abfba931790df85b4417cb0 (origin/master, origin/HEAD, feature2, feature1)
+Author: devops-intellipaat <hemant@intellipaat.com>
+Date:   Fri Jan 18 02:32:00 2019 +0000
+
+    Changed main.c
+
+commit 85766201fbb0ef305b34b6e236781a30fc322c10
+Author: devops-intellipaat <hemant@intellipaat.com>
+Date:   Fri Jan 18 02:24:31 2019 +0000
+
+    initial commit
+sh-3.2# git checkout feature1
+Switched to branch 'feature1'
+sh-3.2# cat main.c 
+pseudo code
+{
+Initial Function()
+{
+  //Sample Code
+}
+
+Initial Function2()
+{
+ //Sample Code
+}
+
+
+
+}
+sh-3.2# vi main.c 
+sh-3.2# git add .
+sh-3.2# git commit -m "added feature1"
+[feature1 50cf1b4] added feature1
+ 1 file changed, 5 insertions(+)
+sh-3.2# git checkout feature2
+Switched to branch 'feature2'
+sh-3.2# ls
+.git	main.c
+sh-3.2# cat main.c 
+pseudo code
+{
+Initial Function()
+{
+  //Sample Code
+}
+
+Initial Function2()
+{
+ //Sample Code
+}
+
+
+
+}
+sh-3.2# vi main.c
+sh-3.2# git add .
+sh-3.2# git commit -m "added feature2"
+[feature2 fccd07f] added feature2
+ 1 file changed, 4 insertions(+)
+sh-3.2# git checkout feature1
+Switched to branch 'feature1'
+sh-3.2# git merge master
+Auto-merging main.c
+CONFLICT (content): Merge conflict in main.c
+Automatic merge failed; fix conflicts and then commit the result.
+sh-3.2# git branch
+* feature1
+  feature2
+  master
+sh-3.2# git mergetool -t vimdiff
+Merging:
+main.c
+
+Normal merge conflict for 'main.c':
+  {local}: modified file
+  {remote}: modified file
+4 files to edit
+sh-3.2# pwd
+/Users/vijayasajwan/git-merge/merge-conflict
+sh-3.2# git branch
+* feature1
+  feature2
+  master
+sh-3.2# git commit -m "mergerd with master"
+[feature1 a04a8c7] mergerd with master
+sh-3.2# git status
+On branch feature1
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	main.c.orig
+
+nothing added to commit but untracked files present (use "git add" to track)
+sh-3.2# git checkout feature2
+Switched to branch 'feature2'
+sh-3.2# cat main.c
+pseudo code
+{
+Initial Function()
+{
+  //Sample Code
+}
+
+Initial Function2()
+{
+ //Sample Code
+}
+
+feature2()
+{
+}
+
+
+
+}
+sh-3.2# git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: added feature2
+Using index info to reconstruct a base tree...
+M	main.c
+Falling back to patching base and 3-way merge...
+Auto-merging main.c
+CONFLICT (content): Merge conflict in main.c
+error: Failed to merge in the changes.
+Patch failed at 0001 added feature2
+The copy of the patch that failed is found in: .git/rebase-apply/patch
+
+Resolve all conflicts manually, mark them as resolved with
+"git add/rm <conflicted_files>", then run "git rebase --continue".
+You can instead skip this commit: run "git rebase --skip".
+To abort and get back to the state before "git rebase", run "git rebase --abort".
+
+sh-3.2# git mergetool -t vimdiff
+Merging:
+main.c
+
+Normal merge conflict for 'main.c':
+  {local}: modified file
+  {remote}: modified file
+4 files to edit
+sh-3.2# cat main.c
+pseudo code
+{
+Initial Function()
+{
+  //Sample Code
+}
+
+Initial Function2()
+{
+ //Sample Code
+}
+
+security()
+{
+//security patch
+feature2()
+{
+}
+
+}
+sh-3.2# git commit -m "security patch on feature2"
+[detached HEAD 4d62262] security patch on feature2
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+sh-3.2# git branch
+* (no branch, rebasing feature2)
+  feature1
+  feature2
+  master
+sh-3.2# sudo git checkout master
+Warning: you are leaving 1 commit behind, not connected to
+any of your branches:
+
+  4d62262 security patch on feature2
+
+If you want to keep it by creating a new branch, this may be a good time
+to do so with:
+
+ git branch <new-branch-name> 4d62262
+
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+sh-3.2# cat main.c
+pseudo code
+{
+Initial Function()
+{
+  //Sample Code
+}
+
+Initial Function2()
+{
+ //Sample Code
+}
+
+security()
+{
+//security patch
+}
+
+
+
+}
+sh-3.2# ls
+.git		main.c		main.c.orig
+sh-3.2# git branch
+  feature1
+  feature2
+* master
+sh-3.2# git merge feature1
+Updating e924769..a04a8c7
+Fast-forward
+ main.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+sh-3.2# git merge feature2
+Auto-merging main.c
+CONFLICT (content): Merge conflict in main.c
+Automatic merge failed; fix conflicts and then commit the result.
+sh-3.2# ls
+.git		main.c		main.c.orig
+sh-3.2# cat main.c
+pseudo code
+{
+Initial Function()
+{
+  //Sample Code
+}
+
+Initial Function2()
+{
+ //Sample Code
+}
+
+<<<<<<< HEAD
+feature1()
+{
+//sample code for feature1
+}
+security()
+{
+//security patch
+}
+=======
+feature2()
+{
+}
+
+
+>>>>>>> feature2
+
+}
+sh-3.2# git mergetool -t vimdiff
+Merging:
+main.c
+
+Normal merge conflict for 'main.c':
+  {local}: modified file
+  {remote}: modified file
+4 files to edit
+sh-3.2# git commit -m "final merge to master"
+[master 569ad0f] final merge to master
+sh-3.2# cat main.c
+pseudo code
+{
+Initial Function()
+{
+  //Sample Code
+}
+
+Initial Function2()
+{
+ //Sample Code
+}
+
+feature1()
+{
+//sample code for feature1
+}
+security()
+{
+//security patch
+}
+feature2()
+{
+}
+
+}
+sh-3.2# pwd
+/Users/vijayasajwan/git-merge/merge-conflict
+sh-3.2# git push origin master
+Counting objects: 15, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (15/15), 1.17 KiB | 600.00 KiB/s, done.
+Total 15 (delta 6), reused 0 (delta 0)
+remote: Resolving deltas: 100% (6/6), done.
+To https://github.com/vijayasajwan0810/merge-conflict.git
+   1dd8603..569ad0f  master -> master
